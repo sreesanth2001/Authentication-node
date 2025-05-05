@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { toast } from 'sonner'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Signuppage = () => {
 const [name,setName] =useState("")
@@ -9,7 +10,7 @@ const [email,setEmail] =useState("")
 const [password,setPassword] =useState("")
 const [phoneNo,setPhoneNo] =useState("")
 const [address,setAddress ]=useState("")
-
+const navigate= useNavigate()
 //handle submit
 const handleSubmit=async (e)=>{
   e.preventDefault()
@@ -18,6 +19,7 @@ const handleSubmit=async (e)=>{
       const{data}= await axios.post("http://localhost:4000/api/v1/auth/signup",{name,email,password,phoneNo,address});
       if(data && data.success){
         toast.success(data.message)
+        navigate("/login")
       }else{
         toast.error(data.error)
       }
